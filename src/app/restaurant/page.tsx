@@ -1,13 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Login from './_components/Login';
 import Signup from './_components/Signup';
 import Navbar from '../_components/Navbar';
 import Footer from '../_components/Footer';
+import { useRouter } from 'next/navigation';
 
 export default function Restaurant() {
+    const router = useRouter();
+
     const [login, setLogin] = useState(true);
+    const [token, setToken] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        setToken(token);
+
+        if (token) {
+            router.push('/restaurant/dashboard');
+        }
+
+        setLoading(false);
+    }, []);
+
+    if (loading || token) {
+        return;
+    }
 
     return (
         <>

@@ -14,7 +14,6 @@ export async function POST(request: Request) {
     await mongoDB();
 
     const body = await request.json();
-    console.log(body);
 
     const { name, address, email, password } = body;
 

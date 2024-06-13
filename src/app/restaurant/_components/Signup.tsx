@@ -14,7 +14,6 @@ export default function Signup({ onToggle }: SignupProps) {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log({ name, email, password, address });
 
         if (password !== confirmPassword) {
             alert('Passwords do not match');
@@ -29,12 +28,13 @@ export default function Signup({ onToggle }: SignupProps) {
             body: JSON.stringify({ name, email, password, address }),
         });
 
-        console.log(response);
+        const data = await response.json();
 
-        if (response.ok) {
+        if (data.success) {
+            alert('Sign up successful');
             onToggle();
         } else {
-            alert('Failed to sign up');
+            alert(data.errMsg || 'Failed to sign up');
         }
     };
 
